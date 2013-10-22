@@ -1,0 +1,20 @@
+<html ng-app='OverlayApp'>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ng-overlay</title>
+    <meta name="description" content="AngularJS directive that creates a triangle with text on any corner of a div.">
+    <meta name="viewport" content="width=device-width">
+</head>
+  <body ng-controller="OverlayCtrl">
+    
+    <div overlay overlay-position="position" overlay-show='active'>
+      {{someText}}
+    </div>
+    
+    <script src="bower_components/angular/angular.min.js"></script>  
+    <script src="ng-overlay.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>

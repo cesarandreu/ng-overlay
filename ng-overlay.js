@@ -1,4 +1,4 @@
-angular.module('overlay')
+angular.module('ng-overlay', [])
 .directive('overlay', ['$compile', function($compile){
   'use strict';
   var overlay;
@@ -8,7 +8,6 @@ angular.module('overlay')
     link: function($scope, iElm, iAttrs) {
 
       var options = ['overlayShow',
-                    'overlayPosition',
                     'overlayText',
                     'overlayWidth',
                     'overlayColor',
@@ -19,19 +18,29 @@ angular.module('overlay')
         $scope[options[i]] = $scope.$parent.$eval(iAttrs[options[i]]);
       }
 
+      var positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+      if (iAttrs.overlayPosition === undefined) {
+        $scope.overlayPosition = 'top-left';
+      } else if (positions.indexOf(iAttrs.overlayPosition) >= 0) {
+        $scope.overlayPosition = iAttrs.overlayPosition;
+      } else {
+        $scope.overlayPosition = $scope.$parent.$eval(iAttrs.overlayPosition);
+      }
+
       //Sets default values
       var position = $scope.overlayPosition || 'top-left',
           width = $scope.overlayWidth || 100,
           color = $scope.overlayColor || '#dddddd',
           textLineHeight = $scope.overlayLineHeight || 12,
           overlayText = $scope.overlayText || '',
-          show = typeof $scope.overlayShow === undefined ? true : $scope.overlayShow;
-
+          show = ((typeof $scope.overlayShow) === 'undefined' ? true : $scope.overlayShow);
+          console.log(typeof $scope.overlayShow);
       var textWidth = Math.pow(Math.pow(width, 2) + Math.pow(width,2), 0.5),
           textTop, textBottom, textLeft, textRight, deg;
           textTop = textBottom = -(width / 2) - textLineHeight;
           textLeft = textRight = (width / 2) - (textWidth / 2) - textLineHeight;
 
+      console.log('show', show, typeof show);
 
       //Prepares the CSS for triangles and text
       var overlayElement = $compile('<div><div id="triangle"><div/>{{overlayText}}</div>')($scope);
@@ -52,7 +61,6 @@ angular.module('overlay')
 
 
       if (position === 'top-left') {
-        console.log('Stop here.');
         overlayElement.css('top', '0');
         overlayElement.css('left', '0');
         triangle.css('border-top', width+'px solid '+color);
@@ -95,17 +103,17 @@ angular.module('overlay')
 
       iElm.prepend(overlayElement);
       overlay = overlayElement;
-
-      $scope.$parent.$watch(iAttrs.overlayShow, function(newVal) {
-        console.log('newVal', newVal);
-        if (newVal) {
-          overlay.css('opacity', '1');
-          overlay.css('z-index', '9999');
-        } else {
-          overlay.css('opacity', '0');
-          overlay.css('z-index', '-1');
-        }
-      });
+      if (typeof show === 'boolean') {
+        $scope.$parent.$watch(iAttrs.overlayShow, function(newVal) {
+          if (newVal) {
+            overlay.css('opacity', '1');
+            overlay.css('z-index', '9999');
+          } else {
+            overlay.css('opacity', '0');
+            overlay.css('z-index', '-1');
+          }
+        });
+      }
 
     }
   };
