@@ -1,0 +1,28 @@
+{
+  "name": "ng-overlay",
+  "version": "1.0.0",
+  "authors": [
+    "Cesar Andreu <cesarandreu@gmail.com>"
+  ],
+  "description": "AngularJS directive that creates a triangle with text on any corner of a div.",
+  "main": "overlay.js",
+  "keywords": [
+    "overlay",
+    "angularjs",
+    "ng-overlay",
+    "triangle",
+    "border"
+  ],
+  "license": "MIT",
+  "homepage": "www.github.com/cesarandreu/ng-overlay",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": ">=1.0.8"
+  }
+}
